@@ -1,0 +1,9 @@
+if(
+    empty(prop("Last done time")), 
+    999999, 
+    (dateBetween(
+        FileFunction(getTodayResetTime), 
+        prop("Last done time"), 
+        "minutes"
+    ) / (24 * 60)) + 1
+)

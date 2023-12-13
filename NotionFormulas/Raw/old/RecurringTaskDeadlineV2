@@ -1,0 +1,1 @@
+ and(             or( empty(prop("Months intervals")), if( empty(prop("Last done time")), parseDate("2000-01-01"), prop("Last done time") ) ), or( empty(prop("Days intervals")), prop("Days intervals")<=prop("Days since last done") ), or( empty(prop("Hours intervals")), if( empty(prop("Last done time")), parseDate("2000-01-01"), prop("Last done time") ) ) )        

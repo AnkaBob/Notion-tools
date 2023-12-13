@@ -1,0 +1,5 @@
+if(
+    empty(prop("Last done time")),
+    parseDate("2000-01-01"),
+    prop("Last done time")
+)

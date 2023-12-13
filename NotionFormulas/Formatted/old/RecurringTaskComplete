@@ -1,0 +1,90 @@
+and(
+
+    # Testing weekdays and weekends
+    or(
+        !prop("Weekday only"), 
+        !contains("Saturday,Sunday", formatDate(now(), "dddd"))
+    ),
+    or(
+        !prop("Weekend only"),
+        contains("Saturday,Sunday", formatDate(now(), "dddd"))
+    ),
+
+    # Testing for days of the month (for instance if a task is only after the 15th of the month or before the 5th of the month)
+    # Filter on particular days of the month
+    or(
+        empty(prop("Starting day of the month")),
+        prop("Starting day of the month") <= date(now())
+    ),
+    or(
+        empty(prop("Ending day of the month")),
+        prop("Ending day of the month") >= date(now())
+    ),
+
+    # Testing for hours of the day (for instance if a task is only after 9am or before 5pm)
+    or(
+        empty(prop("Starting hour")),
+        prop("Starting hour") <= hour(now())
+    ),
+    or(
+        empty(prop("Ending hour")),
+        prop("Ending hour") >= hour(now())
+    ),
+
+    # Testing for days of the week (for instance if a task is only on Mondays)
+    or(
+        empty(prop("Day of the week (only)")),
+        prop("Day of the week (only)") == formatDate(now(), "dddd")
+        #Below code cause issues when we don't have last done time, 
+        #it can be overcome by added a 1 day interval to the last done time in the settings
+        #
+        #and(
+        #    prop("Day of the week (only)") == formatDate(now(), "dddd"),
+        #    or(
+        #        empty(prop("Last done time")),
+        #        formatDate(now(), "M/D/YY") > formatDate(prop("Last done time"), "M/D/YY")
+        #    )
+        #)
+    ),
+
+
+    # Once we tested for the availability of the task, we compare to the last time it was done
+    or(
+        # First of all we check if the task has ever been done, if not we show it,
+        empty(prop("Last done time")),
+        
+        # If not empty we check for other conditions
+        and(
+            # Removed for now as I can't understand the logic behind it
+            #or(
+            #    empty(prop("Day of the month (from)")),
+            #    or(
+            #        #If the last done time is more than a month ago 
+            #        dateBetween(now(), prop("Last done time"), "months") > 0,
+            #        #or the day of the month is more than the last done time
+            #        prop("Day of the month (from)") > date(prop("Last done time"))
+            #    )
+            #),
+
+            #Checking month, day and hour intervals
+            or(
+                empty(prop("Months intervals")),
+                prop("Months intervals") <= dateBetween(now(), prop("Last done time"), "months")
+            ),
+            or(
+                empty(prop("Days intervals")),
+                prop("Days intervals") <= prop("Days since last done")
+            ),
+            or(
+                empty(prop("Hours intervals")),
+                prop("Hours intervals") <= dateBetween(now(), prop("Last done time"), "hours")
+            )
+        )
+    )
+)
+
+
+#We need to check if days since last done is empty, if so we show the task
+#Should not be needed because the default value is 999999
+#Add the skipped day information
+#It seems that the fomula don't work at all if the last_done is empty, maybe we can move the test at the beginning of the formula

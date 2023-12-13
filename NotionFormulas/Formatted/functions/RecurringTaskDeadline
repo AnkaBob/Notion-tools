@@ -1,0 +1,16 @@
+
+and(
+    #Checking month, day and hour intervals
+    or(
+        empty(prop("Months intervals")),
+        prop("Months intervals") <= dateBetween(now(), FileFunction(getLastTimeDone), "months")
+    ),
+    or(
+        empty(prop("Days intervals")),
+        prop("Days intervals") <= FileFunction(getDaysSinceLastDone)
+    ),
+    or(
+        empty(prop("Hours intervals")),
+        prop("Hours intervals") <= dateBetween(now(), FileFunction(getLastTimeDone), "hours")
+    )
+)

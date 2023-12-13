@@ -1,0 +1,13 @@
+dateSubtract(
+    dateSubtract(
+        dateSubtract(
+            now(), 
+            hour(now()) - 5, 
+            "hours"
+        ), 
+        minute(now()),
+        "minutes"
+    ), 
+    if(hour(now()) < 5, 1, 0),
+    "days"
+)
