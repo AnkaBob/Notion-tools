@@ -1,4 +1,3 @@
-
 and(
     #Checking month, day and hour intervals
     or(
@@ -12,5 +11,10 @@ and(
     or(
         empty(prop("Hours intervals")),
         prop("Hours intervals") <= dateBetween(now(), FileFunction(getLastTimeDone), "hours")
+    ),
+    if(
+        empty(prop("Last skipped time")),
+        true,
+        prop("Last skipped time") < prop("Configuration database").first().prop("Current day start")
     )
 )

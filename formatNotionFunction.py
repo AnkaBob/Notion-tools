@@ -1,6 +1,6 @@
 import re
 
-file_name = 'isRecurringVisible'
+file_name = 'isActiveForTheDay'
 
 def transform_file(file_name):
 

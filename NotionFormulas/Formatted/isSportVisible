@@ -1,0 +1,1 @@
+prop("Configuration database").first().prop("Current day start")<prop("Created time")

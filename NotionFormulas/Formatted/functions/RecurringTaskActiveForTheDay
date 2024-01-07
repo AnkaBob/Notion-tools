@@ -4,13 +4,10 @@ and(
     # Testing if work mode and work mode is on
     or(
         and(
-            prop("Configuration database").first().prop("Work"),
+            prop("Configuration database").first().prop("Current day setting").contains("Work"),
             prop("Settings").contains("Work")
         ),
-        and(
-            !prop("Configuration database").first().prop("Work"),
-            !prop("Settings").contains("Work")
-        )
+        !prop("Settings").contains("Work")
     ),
 
     # Testing weekdays and weekends

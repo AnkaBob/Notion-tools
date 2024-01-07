@@ -1,0 +1,43 @@
+style(
+    join(
+        [
+            if(
+                prop("Time of the day")=="05-early morning",
+                "⏰",
+                ""
+            ),
+            if(
+                prop("Time of the day")=="15-morning",
+                "🌅",
+                ""
+            ),
+            if(
+                prop("Time of the day")=="75-evening",
+                "🌆",
+                ""
+            ),
+            if(
+                prop("Time of the day")=="90-before bed",
+                "🌙",
+                ""
+            ),
+            if(
+                prop("Settings").contains("Work"),
+                "💼",
+                ""
+            ),
+            prop("Name")
+        ],
+        ""
+    ),
+    if(
+        prop("Status")=="High",
+        "b",
+        ""
+    ),
+    if(
+        prop("Status")=="Low",
+        "gray",
+        ""
+    )
+)

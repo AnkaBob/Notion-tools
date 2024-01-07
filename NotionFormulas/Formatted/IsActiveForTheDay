@@ -1,0 +1,4 @@
+and(
+    FileFunction(RecurringTaskActiveForTheDay),
+    FileFunction(RecurringTaskDeadline)
+)
